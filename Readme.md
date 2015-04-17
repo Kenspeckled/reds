@@ -1,3 +1,5 @@
+*This is a fork of [tj/reds](https://github.com/tj/reds) that modifies the output of `end` to return an array of objects containing the the count of matched words as well as their ids.*
+
 # reds
 
   reds is a light-weight Redis search for node.js. This module was originally developed to provide search capabilities for [Kue](http://learnboost.github.com/kue) a priority job queue, however it is very much a light general purpose search library that could be integrated into a blog, a documentation server, etc.
@@ -32,11 +34,11 @@ strs.forEach(function(str, i){ search.index(str, i); });
 ```js
 search
   .query(query = 'Tobi dollars')
-  .end(function(err, ids){
+  .end(function(err, results){
     if (err) throw err;
     console.log('Search results for "%s":', query);
-    ids.forEach(function(id){
-      console.log('  - %s', strs[id]);
+    results.forEach(function(result){
+      console.log('  - %s', strs[result.id]);
     });
     process.exit();
   });
@@ -90,7 +92,7 @@ var search = reds.createSearch('misc');
 search.index('Foo bar baz', 'abc');
 search.index('Foo bar', 'bcd');
 search.remove('bcd');
-search.query('foo bar').end(function(err, ids){});
+search.query('foo bar').end(function(err, results){});
 ```
 
 ## About
